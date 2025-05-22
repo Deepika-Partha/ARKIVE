@@ -83,7 +83,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: 50px; /* 1 inch padding on the right */
+    padding-right: 50px; /* right side padding (marginal) */
     box-sizing: border-box;
   }
 
@@ -118,9 +118,9 @@
 
     .get-started-btn {
     margin-top: 2rem;
-    padding: 1rem 3rem;
-    background-color: #2d2721; /* dark brownish-black */
-    color: #d4bfae; /* soft beige/tan text */
+    padding: 1rem 2rem;
+    background-color: #2d2721; /* black */
+    color: #d4bfae; /* soft beige/tan text (highlighted hover) */
     border: none;
     border-radius: 50px;
     font-size: 1rem;
@@ -128,7 +128,7 @@
     letter-spacing: 1px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 250px;
+    width: 190px;
     }
 
 .get-started-btn:hover {
@@ -159,7 +159,8 @@
       Step into a space where academic life is streamlined and stress-free. 
       Arkive brings all your textbooks, notes, and planners into one digital hub—so you can focus more on learning and less on managing.
     </p>
-    <button class="get-started-btn">GET STARTED</button>
+    <a class="get-started-btn" href="/registration">GET STARTED</a>
+
 
   </div>
   <div class="right">
