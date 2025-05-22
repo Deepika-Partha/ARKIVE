@@ -4,11 +4,7 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
 ## 🚀 Features
 
-- Clean navigation (Calendar, Agent, Notebooks)
-- Responsive design
-- MongoDB, SvelteKit setup
-- Portrait-oriented image support
-- Git-ignored system files like `.DS_Store`
+- TBD
 
 ## 🛠️ Setup Instructions
 
