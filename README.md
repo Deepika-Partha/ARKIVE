@@ -22,10 +22,15 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm install
+   
 3. **Run the development server:**
 
    ```bash
    npm run dev
 
-  
+4. **Connect to github:**
 
+   ```bash
+   git init
+   git remote add origin https://github.com/Deepika-Partha/ARKIVE.git
+   
