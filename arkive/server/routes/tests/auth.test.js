@@ -4,8 +4,8 @@ import request from 'supertest';
 import express, { json } from 'express';
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { create, findOne } from '../models/User';
-import authRouter from '../routes/auth';
+import { create, findOne } from '../../models/User';
+import authRouter from '../auth';
 
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');

@@ -18,8 +18,12 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm install
-   npm install --save-dev concurrently
-   
+   npm install --save-dev jest supertest
+   npm install express
+   npm install bcrypt
+   npm install jsonwebtoken
+   npm install mongoose
+
 3. **Run the development server:**
 
    ```bash
