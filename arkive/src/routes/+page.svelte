@@ -10,6 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
   }
 
   .logo {
@@ -17,23 +18,28 @@
     font-weight: bold;
     color: #1e1e1e;
     text-decoration: none;
+
   }
 
   .nav-links {
     display: flex;
     gap: 1.5rem;
     align-items: center;
+    padding-left: 60vw;
+    /* border: 1px solid #1e1e1e; */
   }
 
   .nav-links a {
     text-decoration: none;
     color: #1e1e1e;
     font-weight: 500;
+    /* border: 1px solid #1e1e1e;
+    border-radius: 20px; */
   }
 
   .login-btn {
     padding: 0.4rem 1rem;
-    border: 1px solid #1e1e1e;
+    border: 1px solid #2d2721;
     border-radius: 20px;
     background: none;
     cursor: pointer;
@@ -119,7 +125,7 @@
     .get-started-btn {
     margin-top: 2rem;
     padding: 1rem 2rem;
-    background-color: #2d2721; /* black */
+    background-color: #2d2721; /* not black */
     color: #d4bfae; /* soft beige/tan text (highlighted hover) */
     border: none;
     border-radius: 50px;
@@ -147,8 +153,8 @@
     <a href="/calendar">Calendar</a>
     <a href="/agent">Agent</a>
     <a href="/notebooks">Notebooks</a>
-    <button class="login-btn">Login</button>
   </div>
+  <a class="login-btn" href="/login">Login</a>
 </nav>
 
 <!-- Hero Section -->
