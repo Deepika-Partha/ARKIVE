@@ -28,15 +28,12 @@
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" id="password" bind:value={password} required placeholder="Enter your password">
             </div>
-            <div class="mb-3 form-check">
+            <div class="mb-3 form-check"> #not implemented
               <input type="checkbox" class="form-check-input" id="rememberMe">
               <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
             <button type="submit" class="btn btn-primary w-100">Log In</button>
           </form>
-          <p class="mt-3 text-center">
-            <a href="/forgot-password">Forgot password?</a>
-          </p>
           <hr>
           <p class="mt-3 text-center">
             Don't have an account? <a href="/registration">Sign Up</a>
