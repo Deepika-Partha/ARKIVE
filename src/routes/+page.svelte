@@ -31,7 +31,7 @@
     font-weight: 500;
   }
 
-  .login-btn {
+  .login-btn a{
     padding: 0.4rem 1rem;
     border: 1px solid #1e1e1e;
     border-radius: 20px;
@@ -43,7 +43,7 @@
     color: #d4bfae;
   }
 
-  .login-btn:hover {
+  .login-btn:hover a{
     color: #1e1e1e;
     background-color: hsla(30.73, 22.65%, 64.51%, 1); /* soft beige/tan text */
 }
@@ -147,7 +147,10 @@
     <a href="/calendar">Calendar</a>
     <a href="/agent">Agent</a>
     <a href="/notebooks">Notebooks</a>
-    <button class="login-btn">Login</button>
+    <!-- <button class="login-btn">Login</button> -->
+    <div class="login-btn">
+      <a href="/login">Login</a>
+    </div>
   </div>
 </nav>
 
