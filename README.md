@@ -4,7 +4,11 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
 ## 🚀 Features
 
-- TBD
+- 📚 Digital textbook viewer  
+- 🗓️ Calendar and planner integration  
+- 📝 Smart notes with organization by subject or category  
+- ✅ Task and assignment tracking  
+- 🔍 Unified search across materials  
 
 ## 🛠️ Setup Instructions
 
@@ -18,15 +22,22 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm install
+   npm install
+   npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/interaction
+   npm install --save-dev @types/fullcalendar
+   npm install mammoth
+   npm install docx
+   npm install pdfjs-dist
    
 3. **Run the development server:**
 
    ```bash
    npm run dev
 
-4. **Connect to github:**
+4. **Testing:**
 
    ```bash
-   git init
-   git remote add origin https://github.com/Deepika-Partha/ARKIVE.git
+   npm install --save-dev jest ts-jest @types/jest svelte-jester @testing-library/svelte @testing-library/jest-dom jest-environment-jsdom
+   npx jest
+   npx jest --coverage
    
