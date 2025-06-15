@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749957899918" clover="3.2.0">
-  <project timestamp="1749957899918" name="All files">
+<coverage generated="1749961425980" clover="3.2.0">
+  <project timestamp="1749961425980" name="All files">
     <metrics statements="29" coveredstatements="29" conditionals="24" coveredconditionals="17" methods="7" coveredmethods="7" elements="60" coveredelements="53" complexity="0" loc="29" ncloc="29" packages="1" files="1" classes="1"/>
     <file name="calendarUtils.ts" path="/Users/deepikaparthasarathy/Desktop/ARKIVE/arkive/src/routes/calendar/calendarUtils.ts">
       <metrics statements="29" coveredstatements="29" conditionals="24" coveredconditionals="17" methods="7" coveredmethods="7"/>
