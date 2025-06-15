@@ -13,6 +13,40 @@
   }
 </script>
 
+<style>
+  nav {
+    background-color: hsla(30.73, 22.65%, 64.51%, 1);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1e1e1e;
+    text-decoration: none;
+  }
+
+
+  @media (max-width: 768px) {
+
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+}
+
+
+
+</style>
+
+<!-- Top Navigation Bar -->
+<nav>
+  <a href="/" class="logo">ARKIVE</a>
+</nav>
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
