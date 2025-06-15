@@ -18,6 +18,9 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm install
+
+
+---FOR DATABASE (login/register/logout) AND UNIT TESTS---
    npm install --save-dev jest supertest
    npm install express
    npm install dotenv

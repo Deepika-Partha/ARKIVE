@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1749963894918" clover="3.2.0">
+  <project timestamp="1749963894918" name="All files">
+    <metrics statements="30" coveredstatements="30" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3" elements="47" coveredelements="47" complexity="0" loc="30" ncloc="30" packages="2" files="2" classes="2"/>
+    <package name="models">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="User.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\models\User.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="routes">
+      <metrics statements="29" coveredstatements="29" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
+      <file name="auth.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\routes\auth.js">
+        <metrics statements="29" coveredstatements="29" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="26" count="6" type="cond" truecount="4" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="31" count="5" type="stmt"/>
+        <line num="32" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="37" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="73" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

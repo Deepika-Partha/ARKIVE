@@ -34,25 +34,18 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #1e1e1e;
     text-decoration: none;
   }
-
-
   @media (max-width: 768px) {
-
     nav {
       flex-direction: column;
       align-items: flex-start;
+    }
   }
-}
-
-
-
 </style>
 
 <!-- Top Navigation Bar -->

@@ -41,15 +41,12 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #1e1e1e;
     text-decoration: none;
   }
-
-
   @media (max-width: 768px) {
 
     nav {
@@ -57,8 +54,6 @@
       align-items: flex-start;
   }
 }
-
-
 
 </style>
 
@@ -80,7 +75,7 @@
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" bind:value={password} required minlength="8" placeholder="Choose a password (min. 8 characters)">
+              <input type="password" class="form-control" id="password" bind:value={password} required minlength="5" placeholder="Choose a password (min. 8 characters)">
             </div>
             <div class="mb-3">
               <label for="confirmPassword" class="form-label">Confirm Password</label>
