@@ -315,7 +315,6 @@
     --accent-color: #5c6bc0;
   }
 
-  /* Drag and drop specific styles */
   .category-tab {
     user-select: none;
     cursor: grab;
@@ -477,7 +476,6 @@
   }
 
   .category-tab {
-    /* ... existing styles ... */
     user-select: none;
     cursor: grab;
     transition: transform 0.2s;
@@ -821,7 +819,7 @@
           {#if isLoading}
             <span>Processing... <span class="loading"></span></span>
           {:else}
-            <span>📁 Upload PDF, DOCX, or text files</span>
+            <span>Upload PDFs, DOCX, or .txt files</span>
           {/if}
         </label>
       </div>
