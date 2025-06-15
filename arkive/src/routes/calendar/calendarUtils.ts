@@ -1,9 +1,35 @@
+//calendarUtils.ts
+
 export function validateEventForm(form: any): string[] {
   const errors: string[] = [];
+
   if (!form.title?.trim()) errors.push('Event title is required');
   if (!form.startDate) errors.push('Start date is required');
+
+  if (!form.allDay) {
+    if (!form.startTime) {
+      errors.push('Start time is required for timed events');
+    }
+    if (form.startTime && form.endTime) {
+      const start = new Date(`1970-01-01T${form.startTime}`);
+      const end = new Date(`1970-01-01T${form.endTime}`);
+      if (end <= start) {
+        errors.push('End time must be after start time');
+      }
+    }
+  }
+
+  if (form.recurring && form.recurring !== 'none' && form.recurringUntil) {
+    const start = new Date(form.startDate);
+    const until = new Date(form.recurringUntil);
+    if (until < start) {
+      errors.push('Recurring end date must be after start date');
+    }
+  }
+
   return errors;
 }
+
 export const eventCategories = {
   work:      { name: 'Work', color: '#9F7AEA' },
   personal:  { name: 'Personal', color: '#F6AD55' },

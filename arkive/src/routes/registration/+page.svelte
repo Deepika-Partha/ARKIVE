@@ -4,16 +4,32 @@
   let email = '';
   let password = '';
   let confirmPassword = '';
+  let loading = false;
 
-  function handleRegister() {
+  async function handleRegister() {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    // Implement your registration logic here
-    // e.g., make an API call to your backend
-    console.log('Registering with:', { email, password });
-    alert('Registration form submitted (see console for data). Implement actual registration logic.');
+    loading = true;
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Registration successful! You can now log in.');
+        window.location.href = '/login';
+      } else {
+        alert(data.error || 'Registration failed');
+      }
+    } catch (err) {
+      alert('Network error');
+    } finally {
+      loading = false;
+    }
   }
 </script>
 
@@ -25,15 +41,12 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #1e1e1e;
     text-decoration: none;
   }
-
-
   @media (max-width: 768px) {
 
     nav {
@@ -41,8 +54,6 @@
       align-items: flex-start;
   }
 }
-
-
 
 </style>
 
@@ -64,7 +75,7 @@
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" bind:value={password} required minlength="8" placeholder="Choose a password (min. 8 characters)">
+              <input type="password" class="form-control" id="password" bind:value={password} required minlength="5" placeholder="Choose a password (min. 8 characters)">
             </div>
             <div class="mb-3">
               <label for="confirmPassword" class="form-label">Confirm Password</label>
