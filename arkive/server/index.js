@@ -1,13 +1,13 @@
-//server/index.js
-require('dotenv').config(); //load .env
+import dotenv from 'dotenv';
+dotenv.config(); 
+
 import express, { json } from 'express';
 const app = express();
-import authRouter from './routes/auth';
+import authRouter from './routes/auth.js';
 
-app.use(json()); //parse JSON bodies
-app.use('/api', authRouter); //mount auth routes at /api
+app.use(json());
+app.use('/api', authRouter); 
 
-//connect to MongoDB
 import { connect } from 'mongoose';
 connect(process.env.MONGO_DB_URI)
   .then(() => console.log('MongoDB connected'))

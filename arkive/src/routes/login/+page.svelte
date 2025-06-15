@@ -1,15 +1,28 @@
 <script lang="ts">
   let email = '';
   let password = '';
+  let loading = false;
 
-  function handleLogin() {
-    // Implement your login logic here
-    // e.g., make an API call to your backend
-    console.log('Logging in with:', { email, password });
-    alert('Login form submitted (see console for data). Implement actual login logic.');
-    // On successful login, you would navigate to another page:
-    // import { goto } from '$app/navigation';
-    // goto('/dashboard'); // or whatever your post-login page is
+  async function handleLogin() {
+    loading = true;
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Login successful!');
+        window.location.href = '/notebooks';
+      } else {
+        alert(data.error || 'Login failed');
+      }
+    } catch (err) {
+      alert('Network error');
+    } finally {
+      loading = false;
+    }
   }
 </script>
 

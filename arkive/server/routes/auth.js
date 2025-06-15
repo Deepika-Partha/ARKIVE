@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router(); //Create a router instance
 import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import User from '../models/User.js';
 
 /**
  * User registration route.

@@ -4,16 +4,32 @@
   let email = '';
   let password = '';
   let confirmPassword = '';
+  let loading = false;
 
-  function handleRegister() {
+  async function handleRegister() {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    // Implement your registration logic here
-    // e.g., make an API call to your backend
-    console.log('Registering with:', { email, password });
-    alert('Registration form submitted (see console for data). Implement actual registration logic.');
+    loading = true;
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Registration successful! You can now log in.');
+        window.location.href = '/login';
+      } else {
+        alert(data.error || 'Registration failed');
+      }
+    } catch (err) {
+      alert('Network error');
+    } finally {
+      loading = false;
+    }
   }
 </script>
 

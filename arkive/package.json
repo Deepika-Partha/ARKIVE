@@ -27,10 +27,14 @@
 		"@fullcalendar/core": "^6.1.17",
 		"@fullcalendar/daygrid": "^6.1.17",
 		"@fullcalendar/interaction": "^6.1.17",
+		"bcrypt": "^6.0.0",
 		"bootstrap": "^5.3.6",
 		"docx": "^9.5.0",
+		"dotenv": "^16.5.0",
 		"express": "^5.1.0",
+		"jsonwebtoken": "^9.0.2",
 		"mammoth": "^1.9.1",
+		"mongoose": "^8.15.2",
 		"pdfjs-dist": "^5.3.31"
 	}
 }
