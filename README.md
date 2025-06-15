@@ -42,3 +42,5 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
    git init
    git remote add origin https://github.com/Deepika-Partha/ARKIVE.git
    
+--- For Database tests ---
+node --experimental-vm-modules ./node_modules/jest/bin/jest.js server/routes/auth.test.js --coverage
