@@ -3,7 +3,7 @@ dotenv.config();
 
 import express, { json } from 'express';
 const app = express();
-import authRouter from './routes/auth.js';
+import authRouter from './auth.js';
 
 app.use(json());
 app.use('/api', authRouter); 

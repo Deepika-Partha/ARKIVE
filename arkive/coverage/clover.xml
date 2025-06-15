@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749963894918" clover="3.2.0">
-  <project timestamp="1749963894918" name="All files">
-    <metrics statements="30" coveredstatements="30" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3" elements="47" coveredelements="47" complexity="0" loc="30" ncloc="30" packages="2" files="2" classes="2"/>
-    <package name="models">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="User.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\models\User.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="2" count="1" type="stmt"/>
+<coverage generated="1750029731587" clover="3.2.0">
+  <project timestamp="1750029731588" name="All files">
+    <metrics statements="78" coveredstatements="78" conditionals="42" coveredconditionals="35" methods="13" coveredmethods="13" elements="133" coveredelements="126" complexity="0" loc="78" ncloc="78" packages="2" files="4" classes="4"/>
+    <package name="server">
+      <metrics statements="49" coveredstatements="49" conditionals="14" coveredconditionals="14" methods="6" coveredmethods="6"/>
+      <file name="User.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\User.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
       </file>
-    </package>
-    <package name="routes">
-      <metrics statements="29" coveredstatements="29" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
-      <file name="auth.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\routes\auth.js">
-        <metrics statements="29" coveredstatements="29" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
+      <file name="auth.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\auth.js">
+        <metrics statements="34" coveredstatements="34" conditionals="14" coveredconditionals="14" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
         <line num="25" count="6" type="stmt"/>
         <line num="26" count="6" type="cond" truecount="4" falsecount="0"/>
@@ -42,6 +45,57 @@
         <line num="104" count="1" type="stmt"/>
         <line num="105" count="1" type="stmt"/>
         <line num="106" count="1" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+      </file>
+      <file name="index.js" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\server\index.js">
+        <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.calendar">
+      <metrics statements="29" coveredstatements="29" conditionals="28" coveredconditionals="21" methods="7" coveredmethods="7"/>
+      <file name="calendarUtils.ts" path="C:\Users\yazyo\Desktop\gitArkive\ARKIVE\arkive\src\routes\calendar\calendarUtils.ts">
+        <metrics statements="29" coveredstatements="29" conditionals="28" coveredconditionals="21" methods="7" coveredmethods="7"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="4" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="25" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="49" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="54" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="3" type="stmt"/>
+        <line num="61" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="67" count="1" type="stmt"/>
       </file>
     </package>
   </project>
