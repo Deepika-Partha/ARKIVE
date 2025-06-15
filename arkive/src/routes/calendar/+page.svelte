@@ -564,7 +564,7 @@
   .calendar-container {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 50px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     padding: 1rem;
     height: 80vh;
@@ -900,7 +900,7 @@
 </nav>
 
 <div class="page-wrapper">
-  <div class="page-header">
+  <!-- <div class="page-header">
     <div class="header-content">
       <h1>Calendar</h1>
       <p class="subtext">Drag events to move them, click dates to add events, and organize with categories</p>
@@ -910,7 +910,7 @@
         + New Event
       </button>
     </div>
-  </div>
+  </div> -->
 
   <div class="calendar-container">
     <div id="calendar"></div>
