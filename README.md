@@ -4,7 +4,11 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
 ## 🚀 Features
 
-- TBD
+- 📚 Digital textbook viewer  
+- 🗓️ Calendar and planner integration  
+- 📝 Smart notes with organization by subject or category  
+- ✅ Task and assignment tracking  
+- 🔍 Unified search across materials  
 
 ## 🛠️ Setup Instructions
 
@@ -17,6 +21,7 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 2. **Install dependencies:**
 
    ```bash IF USING THE CORRECT package.json FILE, JUST DOING npm install WILL WORK
+   npm install
    npm install
    npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/interaction
    npm install --save-dev @types/fullcalendar
@@ -31,25 +36,18 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
    npm install mongoose
    npm install bcrypt
    npm install jsonwebtoken
-
+   
 3. **Run the development server:**
 
    ```bash
    npm run dev
    #in a seperate terminal
    node server/index.js
-
-
-4. **Connect to github:**
+   
+4. **Testing:**
 
    ```bash
-   git init
-   git remote add origin https://github.com/Deepika-Partha/ARKIVE.git
+   npm install --save-dev jest ts-jest @types/jest svelte-jester @testing-library/svelte @testing-library/jest-dom jest-environment-jsdom
+   npx jest
+   npx jest --coverage
    
---- TESTS ---
-npm install --save-dev jest ts-jest @types/jest svelte-jester @testing-library/svelte @testing-library/jest-dom jest-environment-jsdom
-npx jest
-npx jest --coverage
-
---- For Database tests ---
-node --experimental-vm-modules ./node_modules/jest/bin/jest.js server/routes/auth.test.js --coverage

@@ -1,6 +1,5 @@
 /**
  * Mongoose User model.
- *
  * Defines the schema for a user, including:
  * - email: unique, required string
  * - passwordHash: required string (hashed password)
