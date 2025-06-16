@@ -32,7 +32,7 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 3. **Run the development server:**
 
    ```bash
-   npm run dev
+   npm run dev (FROM "archive" folder)
 
 4. **Testing:**
 
