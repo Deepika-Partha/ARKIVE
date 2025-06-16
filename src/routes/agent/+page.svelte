@@ -1,4 +1,11 @@
 <script>
+  import {
+    generateAIResponse,
+    clearChat,
+    clearFiles,
+    prepareChatMessages
+  } from '$lib/agentLogic';
+
 	let fileInput;
 	let chatLog = [];
 	let userInput = "";
@@ -49,16 +56,7 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            messages: [
-              { role: 'system', content: 'You are a helpful assistant.' },
-              ...chatLog
-                .filter(m => m.sender !== 'system') // skip file upload/system messages
-                .map(m => ({
-                  role: m.sender === 'user' ? 'user' : 'assistant',
-                  content: m.text
-                })),
-              { role: 'user', content: currentInput }
-            ]
+            messages: prepareChatMessages(chatLog, currentInput)
           })
         });
 
@@ -88,40 +86,20 @@
 		scrollToBottom();
 	}
 	
-	function generateAIResponse(input) {
-		// Simple response generation based on uploaded files
-		const responses = [
-			`Based on your uploaded textbooks, I can help you with "${input}". Let me analyze the relevant sections...`,
-			`I found relevant information in your textbooks about "${input}". Here's what I discovered...`,
-			`Great question about "${input}"! According to the materials you've uploaded...`,
-			`Let me reference your textbooks to answer "${input}". From what I can see...`
-		];
-		
-		if (uploadedFiles.length === 0) {
-			return "I'd be happy to help you with that! Please upload some textbooks first so I can provide more accurate, context-specific answers.";
-		}
-		
-		return responses[Math.floor(Math.random() * responses.length)];
+	function clearChatHandler(){
+		const result = clearChat();
+    chatLog = result.chatLog;
+    showChat = result.showChat;
 	}
 	
-	function clearChat(){
-		chatLog = [];
-		showChat = false;
-	}
-	
-	function clearFiles(){
-		uploadedFiles = [];
-		if (fileInput) {
-			fileInput.value = '';
-		}
-		const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-		chatLog = [...chatLog, {
-			sender: "system", 
-			text: "🗑️ All uploaded files have been cleared.", 
-			timestamp: timestamp
-		}];
-		showChat = true;
-		scrollToBottom();
+	function clearFilesHandler(){
+		const result = clearFiles(fileInput); // call helper
+
+    uploadedFiles = result.uploadedFiles;
+    chatLog = [...chatLog, result.systemMessage];
+    showChat = result.showChat;
+
+    scrollToBottom();
 	}
 	
 	function scrollToBottom() {
@@ -480,7 +458,7 @@
     <div class="button-group">
       <button class="chat-btn" on:click={fileUpload}>📚 Upload</button>
       {#if uploadedFiles.length > 0}
-        <button class="clear-btn" on:click={clearFiles}>🗑️ Clear Files</button>
+        <button class="clear-btn" on:click={clearFilesHandler}>🗑️ Clear Files</button>
       {/if}
     </div>
     
@@ -547,7 +525,7 @@
         >
           {isLoading ? "..." : "Send"}
         </button>
-        <button class="clear-btn" on:click={clearChat}>Clear Chat</button>
+        <button class="clear-btn" on:click={clearChatHandler}>Clear Chat</button>
       </div>
     </section>
   </main>
