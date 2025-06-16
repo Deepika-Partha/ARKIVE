@@ -35,25 +35,33 @@
 
 <style>
   nav {
-    background-color: hsla(30.73, 22.65%, 64.51%, 1);
-    padding: 2rem 3rem;
+    background: rgba(212, 191, 174, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
   }
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1e1e1e;
-    text-decoration: none;
-  }
-  @media (max-width: 768px) {
 
-    nav {
-      flex-direction: column;
-      align-items: flex-start;
+  .logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
   }
-}
+
+  .logo:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
+
 
 </style>
 

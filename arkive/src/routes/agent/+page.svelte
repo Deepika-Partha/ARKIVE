@@ -133,47 +133,68 @@
     --system-bubble-bg: #e8f4fd;
   }
   
-  nav {
-    background-color: var(--bg-color);
+   nav {
+    background: rgba(212, 191, 174, 0.95);
+    backdrop-filter: blur(20px);
     padding: 1.5rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
-    z-index: 10;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
   }
-  
+
+  .logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .logo:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
+
   .nav-links {
     display: flex;
     gap: 2rem;
     align-items: center;
   }
-  
+
   .nav-links a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.2s;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
+    position: relative;
+    border-bottom: none;
   }
-  
+
   .nav-links a:hover {
     color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
   }
 
   .nav-links a.active {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(45, 39, 33, 0.3);
   }
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1e1e1e;
-    text-decoration: none;
+  .page-wrapper {
+    padding: 2.5rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
   }
   
   .chat-btn, .send-btn, .clear-btn {

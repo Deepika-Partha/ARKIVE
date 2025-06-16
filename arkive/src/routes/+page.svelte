@@ -5,31 +5,57 @@
 <!-- main color hex: hsla(30.73, 22.65%, 64.51%, 1); -->
 <style>
   nav {
-    background-color: hsla(30.73, 22.65%, 64.51%, 1);
-    padding: 2rem 3rem;
+    background: rgba(212, 191, 174, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
   }
 
   .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1e1e1e;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
     text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .logo:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
   }
 
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
   }
 
   .nav-links a {
     text-decoration: none;
-    color: #1e1e1e;
+    color: var(--text-color);
     font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
+    position: relative;
+    border-bottom: none;
   }
+
+  .nav-links a:hover {
+    color: var(--primary-color);
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+  }
+
 
   .login-btn a{
     padding: 0.4rem 1rem;
