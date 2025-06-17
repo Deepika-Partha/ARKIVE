@@ -22,17 +22,28 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm install
-   npm install
+
+   --- CALENDAR ---
    npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/interaction
    npm install --save-dev @types/fullcalendar
+
+   --- NOTEBOOKS ---
    npm install mammoth
    npm install docx
    npm install pdfjs-dist
+
+   --- DATABASE ---
+      npm install express
+   npm install dotenv
+   npm install mongoose
+   npm install bcrypt
+   npm install jsonwebtoken
    
 3. **Run the development server:**
 
    ```bash
    npm run dev (FROM "arkive" folder)
+   node server/index.js (FROM separate terminal)
 
 4. **Testing:**
 
