@@ -33,7 +33,7 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
    npm install pdfjs-dist
 
    --- DATABASE ---
-      npm install express
+   npm install express
    npm install dotenv
    npm install mongoose
    npm install bcrypt
