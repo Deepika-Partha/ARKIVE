@@ -6,11 +6,13 @@
   async function handleLogin() {
     loading = true;
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch('http://localhost:4000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
       });
+
       const data = await res.json();
       if (res.ok) {
         alert('Login successful!');
