@@ -1,5 +1,25 @@
 <script lang="ts">
   import '../app.css';
+  import { onMount } from 'svelte';
+  import { afterNavigate } from '$app/navigation';
+  let loggedIn = false;
+
+  async function checkAuth() {
+    const res = await fetch('/api/auth-status', { credentials: 'include' });
+    const data = await res.json();
+    loggedIn = !!data.loggedIn;
+  }
+
+  async function handleLogout() {
+    await fetch('http://localhost:4000/api/logout', { method: 'POST', credentials: 'include' });
+    loggedIn = false;
+    window.location.href = '/';
+  }
+
+  onMount(() => {
+    checkAuth();
+    afterNavigate(checkAuth);
+  });
 </script>
 
 <!-- main color hex: hsla(30.73, 22.65%, 64.51%, 1); -->
@@ -71,9 +91,7 @@
   .login-btn:hover a{
     color: #1e1e1e;
     background-color: hsla(30.73, 22.65%, 64.51%, 1); /* soft beige/tan text */
-}
-
-  
+  }
 
   .hero {
     display: flex;
@@ -172,10 +190,14 @@
     <a href="/calendar">Calendar</a>
     <a href="/agent">Agent</a>
     <a href="/notebooks">Notebooks</a>
-    <!-- <button class="login-btn">Login</button> -->
     <div class="login-btn">
-      <a href="/login">Login</a>
+      {#if loggedIn}
+        <a href="#" on:click|preventDefault={handleLogout}>Logout</a>
+      {:else}
+        <a href="/login">Login</a>
+      {/if}
     </div>
+    <button style="margin-left:1rem;" on:click={handleLogout}>Logout</button>
   </div>
 </nav>
 

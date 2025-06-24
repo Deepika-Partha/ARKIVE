@@ -16,7 +16,7 @@
       const data = await res.json();
       if (res.ok) {
         alert('Login successful!');
-        window.location.href = '/notebooks';
+        window.location.href = '/';
       } else {
         alert(data.error || 'Login failed');
       }
