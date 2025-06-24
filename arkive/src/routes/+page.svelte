@@ -1,25 +1,13 @@
 <script lang="ts">
   import '../app.css';
-  import { onMount } from 'svelte';
-  import { afterNavigate } from '$app/navigation';
-  let loggedIn = false;
-
-  async function checkAuth() {
-    const res = await fetch('/api/auth-status', { credentials: 'include' });
-    const data = await res.json();
-    loggedIn = !!data.loggedIn;
-  }
+  export let data;
+  let loggedIn = data.loggedIn;
 
   async function handleLogout() {
     await fetch('http://localhost:4000/api/logout', { method: 'POST', credentials: 'include' });
     loggedIn = false;
     window.location.href = '/';
   }
-
-  onMount(() => {
-    checkAuth();
-    afterNavigate(checkAuth);
-  });
 </script>
 
 <!-- main color hex: hsla(30.73, 22.65%, 64.51%, 1); -->
@@ -182,7 +170,7 @@
 
 
 </style>
-
+<!-- Weird logic but a href = "#" is just to have the formatting work for both, and |preventDefault is to have it just do the logout logic -->
 <!-- Top Navigation Bar -->
 <nav>
   <a href="/" class="logo">ARKIVE</a>
@@ -190,14 +178,11 @@
     <a href="/calendar">Calendar</a>
     <a href="/agent">Agent</a>
     <a href="/notebooks">Notebooks</a>
-    <div class="login-btn">
-      {#if loggedIn}
-        <a href="#" on:click|preventDefault={handleLogout}>Logout</a>
-      {:else}
-        <a href="/login">Login</a>
-      {/if}
-    </div>
-    <button style="margin-left:1rem;" on:click={handleLogout}>Logout</button>
+    {#if loggedIn}
+      <div class="login-btn"><a href="#" on:click|preventDefault={handleLogout}>Logout</a></div> 
+    {:else}
+      <div class="login-btn"><a href="/login">Login</a></div>
+    {/if}
   </div>
 </nav>
 
@@ -210,8 +195,6 @@
       Arkive brings all your textbooks, notes, and planners into one digital hub—so you can focus more on learning and less on managing.
     </p>
     <a class="get-started-btn" href="/registration">GET STARTED</a>
-
-
   </div>
   <div class="right">
     <img src="/notebook.jpg" alt="Notebook on table" />
