@@ -34,6 +34,10 @@
 </script>
 
 <style>
+  :global(body) {
+    background: rgba(185,165,144,255);
+  }
+
   nav {
     background: rgba(212, 191, 174, 0.95);
     backdrop-filter: blur(20px);
@@ -61,8 +65,47 @@
     opacity: 0.8;
     transform: translateY(-1px);
   }
+  .card {
+    border-radius: 1.25rem;
+  }
 
+  .form-control {
+    border-radius: 2rem;
+    border: 1.5px solid #222;
+    background: #fcf1e4;
+    box-shadow: none;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.15rem;
+    color: #222;
+    transition: border-color 0.2s;
+  }
 
+  .form-control:focus {
+    border-color: #b97a56;
+    outline: none;
+    background: #f3dcc7;
+  }
+
+  .form-control::placeholder {
+    color: #a0a0a0;
+    opacity: 1;
+    font-size: 1.1rem;
+  }
+  .btn-primary {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+    border-radius: 2rem; 
+    padding: 0.75rem 1.25rem;       
+    font-size: 1.15rem;
+    font-weight: 600;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+    background: #333;
+    border-color: #333;
+    color: #fff;
+  }
 </style>
 
 <!-- Top Navigation Bar -->
@@ -75,19 +118,16 @@
     <div class="col-md-6 col-lg-5">
       <div class="card shadow-sm">
         <div class="card-body p-4">
-          <h2 class="card-title text-center mb-4">Create Account</h2>
+          <h2 class="card-title text-center mb-4">Register</h2>
           <form on:submit|preventDefault={handleRegister}>
             <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" bind:value={email} required placeholder="name@example.com">
+              <input type="email" class="form-control" id="email" bind:value={email} required placeholder="Email">
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" bind:value={password} required minlength="5" placeholder="Choose a password (min. 8 characters)">
+              <input type="password" class="form-control" id="password" bind:value={password} required minlength="5" placeholder="Password">
             </div>
             <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="confirmPassword" bind:value={confirmPassword} required placeholder="Re-enter your password">
+              <input type="password" class="form-control" id="confirmPassword" bind:value={confirmPassword} required placeholder="Re-enter password">
             </div>
             <button type="submit" class="btn btn-primary w-100">Register</button>
           </form>

@@ -33,7 +33,8 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm run dev (FROM "arkive" folder)
-
+   node server/index.js
+   
 4. **Testing:**
 
    ```bash
