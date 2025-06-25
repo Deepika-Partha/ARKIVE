@@ -21,8 +21,8 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 2. **Install dependencies:**
 
    ```bash
-   npm install
-   npm install
+   npm install #only this is needed to install all dependencies if package.json is downloaded
+
    npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/interaction
    npm install --save-dev @types/fullcalendar
    npm install mammoth
