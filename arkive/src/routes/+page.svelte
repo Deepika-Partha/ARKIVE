@@ -1,5 +1,13 @@
 <script lang="ts">
   import '../app.css';
+  export let data;
+  let loggedIn = data.loggedIn;
+
+  async function handleLogout() {
+    await fetch('http://localhost:4000/api/logout', { method: 'POST', credentials: 'include' });
+    loggedIn = false;
+    window.location.href = '/';
+  }
 </script>
 
 <!-- main color hex: hsla(30.73, 22.65%, 64.51%, 1); -->
@@ -71,9 +79,7 @@
   .login-btn:hover a{
     color: #1e1e1e;
     background-color: hsla(30.73, 22.65%, 64.51%, 1); /* soft beige/tan text */
-}
-
-  
+  }
 
   .hero {
     display: flex;
@@ -164,7 +170,7 @@
 
 
 </style>
-
+<!-- Weird logic but a href = "#" is just to have the formatting work for both, and |preventDefault is to have it just do the logout logic -->
 <!-- Top Navigation Bar -->
 <nav>
   <a href="/" class="logo">ARKIVE</a>
@@ -172,10 +178,11 @@
     <a href="/calendar">Calendar</a>
     <a href="/agent">Agent</a>
     <a href="/notebooks">Notebooks</a>
-    <!-- <button class="login-btn">Login</button> -->
-    <div class="login-btn">
-      <a href="/login">Login</a>
-    </div>
+    {#if loggedIn}
+      <div class="login-btn"><a href="#" on:click|preventDefault={handleLogout}>Logout</a></div> 
+    {:else}
+      <div class="login-btn"><a href="/login">Login</a></div>
+    {/if}
   </div>
 </nav>
 
@@ -188,8 +195,6 @@
       Arkive brings all your textbooks, notes, and planners into one digital hub—so you can focus more on learning and less on managing.
     </p>
     <a class="get-started-btn" href="/registration">GET STARTED</a>
-
-
   </div>
   <div class="right">
     <img src="/notebook.jpg" alt="Notebook on table" />

@@ -6,15 +6,17 @@
   async function handleLogin() {
     loading = true;
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch('http://localhost:4000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
       });
+
       const data = await res.json();
       if (res.ok) {
         alert('Login successful!');
-        window.location.href = '/notebooks';
+        window.location.href = '/';
       } else {
         alert(data.error || 'Login failed');
       }
@@ -27,6 +29,10 @@
 </script>
 
 <style>
+  :global(body) {
+    background: rgba(185,165,144,255);
+  }
+
   nav {
     background: rgba(212, 191, 174, 0.95);
     backdrop-filter: blur(20px);
@@ -55,6 +61,52 @@
     transform: translateY(-1px);
   }
 
+  /*login box*/
+  .card {
+    border-radius: 1.25rem;
+  }
+
+  /*email and password box*/
+  .form-control {
+    border-radius: 2rem;
+    border: 1.5px solid #222;
+    background: #fcf1e4; /* Very light orange */
+    box-shadow: none;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.15rem;
+    color: #222;
+    transition: border-color 0.2s;
+  }
+
+  .form-control:focus {
+    border-color: #b97a56;
+    outline: none;
+    background: #f3dcc7;
+  }
+
+  .form-control::placeholder {
+    color: #a0a0a0;
+    opacity: 1;
+    font-size: 1.1rem;
+  }
+
+  /*login button*/
+  .btn-primary {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+    border-radius: 2rem; 
+    padding: 0.75rem 1.25rem;       
+    font-size: 1.15rem;
+    font-weight: 600;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+    background: #333;
+    border-color: #333;
+    color: #fff;
+  }
+  
   @media (max-width: 768px) {
     nav {
       flex-direction: column;
@@ -73,21 +125,15 @@
     <div class="col-md-6 col-lg-5">
       <div class="card shadow-sm">
         <div class="card-body p-4">
-          <h2 class="card-title text-center mb-4">Welcome Back!</h2>
+          <h2 class="card-title text-center mb-4">Login</h2>
           <form on:submit|preventDefault={handleLogin}>
             <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" bind:value={email} required placeholder="name@example.com">
+              <input type="email" class="form-control" id="email" bind:value={email} required placeholder="Email">
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" bind:value={password} required placeholder="Enter your password">
+              <input type="password" class="form-control" id="password" bind:value={password} required placeholder="Password">
             </div>
-            <div class="mb-3 form-check"> #not implemented
-              <input type="checkbox" class="form-check-input" id="rememberMe">
-              <label class="form-check-label" for="rememberMe">Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Log In</button>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
           </form>
           <hr>
           <p class="mt-3 text-center">

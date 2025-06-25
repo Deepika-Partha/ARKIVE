@@ -11,9 +11,15 @@ export default {
   moduleFileExtensions: ['js', 'ts', 'svelte'],
   setupFilesAfterEnv: ['@testing-library/jest-dom'],
   testEnvironment: 'jsdom',
-  moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions?.paths || {}, {
-    prefix: '<rootDir>/',
-  }),
+  transformIgnorePatterns: [
+    "/node_modules/(?!mongoose|bson)/"
+  ],
+  moduleNameMapper: {
+    ...pathsToModuleNameMapper(tsconfig.compilerOptions?.paths || {}, {
+      prefix: '<rootDir>/',
+    }),
+    '^(\\.{1,2}/.*)\\.js$': '$1.js', // From jest.config.js
+  },
 };
 
 

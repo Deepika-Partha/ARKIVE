@@ -21,7 +21,7 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 2. **Install dependencies:**
 
    ```bash
-   npm install
+   npm install #only this is needed to install all dependencies if package.json is downloaded
 
    --- CALENDAR ---
    npm install @fullcalendar/core @fullcalendar/daygrid @fullcalendar/interaction
@@ -43,12 +43,12 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm run dev (FROM "arkive" folder)
-   node server/index.js (FROM separate terminal)
-
+   ```in a separate terminal
+   node server/index.js (FROM "arkive" folder)
+   
 4. **Testing:**
 
    ```bash
-   npm install --save-dev jest ts-jest @types/jest svelte-jester @testing-library/svelte @testing-library/jest-dom jest-environment-jsdom
    npx jest
    npx jest --coverage
    
