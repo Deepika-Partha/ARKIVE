@@ -1,10 +1,36 @@
 <script>
+  import {
+    generateAIResponse,
+    clearChat,
+    clearFiles,
+    prepareChatMessages
+  } from '$lib/agentLogic';
+
+  import { onDestroy } from 'svelte';
+
+  let selectedFile = null;
+  let fileURL = null;
+
+
 	let fileInput;
 	let chatLog = [];
 	let userInput = "";
 	let showChat = false;
 	let isLoading = false;
 	let uploadedFiles = [];
+
+  function openViewer(file) {
+    selectedFile = file;
+    if (fileURL) URL.revokeObjectURL(fileURL);
+    fileURL = URL.createObjectURL(file);
+  }
+
+  function closeViewer() {
+    selectedFile = null;
+    if (fileURL) URL.revokeObjectURL(fileURL);
+    fileURL = null;
+  }
+
 	
 	function fileUpload(){
 		fileInput.click();
@@ -28,7 +54,7 @@
 		}
 	}
 	
-	function sendMsg(){
+	async function sendMsg(){
 		if (userInput.trim() !== "" && !isLoading){
 			const now = new Date();
 			const timestamp = now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
@@ -39,53 +65,60 @@
 			userInput = "";
 			showChat = true;
 			
-			// Simulate AI response (replace with actual API call)
+			// actual AI API call
 			isLoading = true;
-			setTimeout(() => {
-				const aiResponse = generateAIResponse(currentInput);
-				const aiTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-				chatLog = [...chatLog, {sender: "ai", text: aiResponse, timestamp: aiTimestamp}];
-				isLoading = false;
-				scrollToBottom();
-			}, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            messages: prepareChatMessages(chatLog, currentInput)
+          })
+        });
+
+        const data = await response.json();
+        const aiResponse = data.reply || '⚠️ No reply received.';
+        const aiTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        chatLog = [...chatLog, {
+          sender: "ai",
+          text: aiResponse,
+          timestamp: aiTimestamp
+        }];
+      } catch (error) {
+        console.error("AI fetch failed:", error);
+        const errorTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        chatLog = [...chatLog, {
+          sender: "ai",
+          text: "⚠️ There was an issue contacting the assistant. Please try again later.",
+          timestamp: errorTimestamp
+        }];
+      } finally {
+        isLoading = false;
+        scrollToBottom();
+      }
+
 		}
 		scrollToBottom();
 	}
 	
-	function generateAIResponse(input) {
-		// Simple response generation based on uploaded files
-		const responses = [
-			`Based on your uploaded textbooks, I can help you with "${input}". Let me analyze the relevant sections...`,
-			`I found relevant information in your textbooks about "${input}". Here's what I discovered...`,
-			`Great question about "${input}"! According to the materials you've uploaded...`,
-			`Let me reference your textbooks to answer "${input}". From what I can see...`
-		];
-		
-		if (uploadedFiles.length === 0) {
-			return "I'd be happy to help you with that! Please upload some textbooks first so I can provide more accurate, context-specific answers.";
-		}
-		
-		return responses[Math.floor(Math.random() * responses.length)];
+	function clearChatHandler(){
+		const result = clearChat();
+    chatLog = result.chatLog;
+    showChat = result.showChat;
 	}
 	
-	function clearChat(){
-		chatLog = [];
-		showChat = false;
-	}
-	
-	function clearFiles(){
-		uploadedFiles = [];
-		if (fileInput) {
-			fileInput.value = '';
-		}
-		const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-		chatLog = [...chatLog, {
-			sender: "system", 
-			text: "🗑️ All uploaded files have been cleared.", 
-			timestamp: timestamp
-		}];
-		showChat = true;
-		scrollToBottom();
+	function clearFilesHandler(){
+		const result = clearFiles(fileInput); // call helper
+
+    uploadedFiles = result.uploadedFiles;
+    chatLog = [...chatLog, result.systemMessage];
+    showChat = result.showChat;
+
+    scrollToBottom();
 	}
 	
 	function scrollToBottom() {
@@ -108,6 +141,10 @@
 		e.target.style.height = 'auto';
 		e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
 	}
+
+  onDestroy(() => {
+    if (fileURL) URL.revokeObjectURL(fileURL);
+  });
 </script>
 
 <style>
@@ -133,7 +170,7 @@
     --system-bubble-bg: #e8f4fd;
   }
   
-   nav {
+  nav {
     background: rgba(212, 191, 174, 0.95);
     backdrop-filter: blur(20px);
     padding: 1.5rem 3rem;
@@ -145,6 +182,36 @@
     z-index: 100;
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
+    position: relative;
+    border-bottom: none;
+  }
+  
+  .nav-links a:hover {
+    color: var(--primary-color);
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
+  }
+
+  .nav-links a.active {
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(45, 39, 33, 0.3);
   }
 
   .logo {
@@ -159,42 +226,6 @@
   .logo:hover {
     opacity: 0.8;
     transform: translateY(-1px);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    padding: 0.75rem 1.25rem;
-    border-radius: 25px;
-    position: relative;
-    border-bottom: none;
-  }
-
-  .nav-links a:hover {
-    color: var(--primary-color);
-    background-color: var(--hover-color);
-    transform: translateY(-2px);
-  }
-
-  .nav-links a.active {
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(45, 39, 33, 0.3);
-  }
-
-  .page-wrapper {
-    padding: 2.5rem 3rem;
-    max-width: 1400px;
-    margin: 0 auto;
   }
   
   .chat-btn, .send-btn, .clear-btn {
@@ -263,6 +294,14 @@
     word-break: break-word;
     color: #2d2721;
   }
+
+  .file-item:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    transition: all 0.2s ease-in-out;
+  }
+
   
   .chat-section {
     flex: 1;
@@ -448,6 +487,24 @@
       gap: 1rem;
     }
   }
+
+  .file-viewer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #676767; /* light gray */
+    border-left: 1px solid var(--border-color);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.04);
+    padding: 1rem 0; 
+    overflow: hidden;
+  }
+
+  .file-iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    padding: 0 1rem;
+  }
 </style>
 
 <nav>
@@ -465,7 +522,7 @@
     <div class="button-group">
       <button class="chat-btn" on:click={fileUpload}>📚 Upload</button>
       {#if uploadedFiles.length > 0}
-        <button class="clear-btn" on:click={clearFiles}>🗑️ Clear Files</button>
+        <button class="clear-btn" on:click={clearFilesHandler}>🗑️ Clear Files</button>
       {/if}
     </div>
     
@@ -482,11 +539,29 @@
       <div class="file-list">
         <h3 style="color: #2d2721; font-size: 1rem;">Uploaded Files ({uploadedFiles.length}):</h3>
         {#each uploadedFiles as file}
-          <div class="file-item">{file.name}</div>
+          <div class="file-item" on:click={() => openViewer(file)}>{file.name}</div>
         {/each}
       </div>
     {/if}
   </aside>
+
+  {#if selectedFile}
+    <div 
+      class="file-viewer" 
+    >
+      <button 
+        class="clear-btn" 
+        on:click={closeViewer} 
+        style="width: 90%; max-width: 600px; margin: 1rem auto; display: block;" 
+      >
+        ← Close Viewer
+      </button>
+      <iframe
+        src={fileURL}
+        class="file-iframe"
+      ></iframe>
+    </div>
+  {/if}
 
   <main class="chat-section">
     <header class="chat-header">
@@ -532,7 +607,7 @@
         >
           {isLoading ? "..." : "Send"}
         </button>
-        <button class="clear-btn" on:click={clearChat}>Clear Chat</button>
+        <button class="clear-btn" on:click={clearChatHandler}>Clear Chat</button>
       </div>
     </section>
   </main>

@@ -33,12 +33,12 @@ ARKIVE is a digital backpack for students, offering centralized access to digita
 
    ```bash
    npm run dev (FROM "arkive" folder)
+   ```in a separate terminal
    node server/index.js
    
 4. **Testing:**
 
    ```bash
-   npm install --save-dev jest ts-jest @types/jest svelte-jester @testing-library/svelte @testing-library/jest-dom jest-environment-jsdom
    npx jest
    npx jest --coverage
    

@@ -88,6 +88,18 @@ describe('Server index.js', () => {
     logSpy.mockRestore();
   });
 
+  it('root route handler should send Hello from Express!', async () => {
+    const expressMock = require('express');
+    await import('./index.js');
+    const getCall = expressMock().get.mock.calls.find(call => call[0] === '/');
+    expect(getCall).toBeDefined();
+    const handler = getCall[1];
+    const req = {};
+    const res = { send: jest.fn() };
+    handler(req, res);
+    expect(res.send).toHaveBeenCalledWith('Hello from Express!');
+  });
+
   it('should log MongoDB connection error on failure', async () => {
     const error = new Error('fail');
     const mongoose = require('mongoose');
