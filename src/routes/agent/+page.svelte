@@ -1,41 +1,44 @@
 <script>
-  import {
-    generateAIResponse,
-    clearChat,
-    clearFiles,
-    prepareChatMessages
-  } from '$lib/agentLogic';
+	import { onDestroy } from 'svelte';
 
-	let fileInput;
-	let chatLog = [];
-	let userInput = "";
-	let showChat = false;
-	let isLoading = false;
-	let uploadedFiles = [];
-	
-	function fileUpload(){
-		fileInput.click();
-	}
-	
-	function handleFileChange(event){
-		const files = Array.from(event.target.files);
-		uploadedFiles = [...uploadedFiles, ...files];
-		
-		// Show confirmation message
-		if (files.length > 0) {
-			const fileNames = files.map(f => f.name).join(', ');
-			const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-			chatLog = [...chatLog, {
-				sender: "system", 
-				text: `Uploaded: ${fileNames}`
-				// timestamp: timestamp
-			}];
-			showChat = true;
-			scrollToBottom();
-		}
-	}
-	
-	async function sendMsg(){
+  let fileInput;
+  let chatLog = [];
+  let userInput = "";
+  let showChat = false;
+  let isLoading = false;
+  let uploadedFiles = [];
+  let selectedFile = null;
+  let fileURL = null;
+
+  function fileUpload() {
+    fileInput.click();
+  }
+
+  function handleFileChange(event) {
+    const files = Array.from(event.target.files);
+    uploadedFiles = [...uploadedFiles, ...files];
+    // Show confirmation in chat
+    if (files.length > 0) {
+      const names = files.map(f => f.name).join(', ');
+      chatLog = [...chatLog, { sender: 'system', text: `Uploaded: ${names}` }];
+      showChat = true;
+      scrollToBottom();
+    }
+  }
+
+  function openViewer(file) {
+    selectedFile = file;
+    if (fileURL) URL.revokeObjectURL(fileURL);
+    fileURL = URL.createObjectURL(file);
+  }
+
+  function closeViewer() {
+    selectedFile = null;
+    if (fileURL) URL.revokeObjectURL(fileURL);
+    fileURL = null;
+  }
+
+	function sendMsg(){
 		if (userInput.trim() !== "" && !isLoading){
 			const now = new Date();
 			const timestamp = now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
@@ -46,60 +49,53 @@
 			userInput = "";
 			showChat = true;
 			
-			// actual AI API call
+			// Simulate AI response (replace with actual API call)
 			isLoading = true;
-
-      try {
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            messages: prepareChatMessages(chatLog, currentInput)
-          })
-        });
-
-        const data = await response.json();
-        const aiResponse = data.reply || '⚠️ No reply received.';
-        const aiTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        chatLog = [...chatLog, {
-          sender: "ai",
-          text: aiResponse,
-          timestamp: aiTimestamp
-        }];
-      } catch (error) {
-        console.error("AI fetch failed:", error);
-        const errorTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        chatLog = [...chatLog, {
-          sender: "ai",
-          text: "⚠️ There was an issue contacting the assistant. Please try again later.",
-          timestamp: errorTimestamp
-        }];
-      } finally {
-        isLoading = false;
-        scrollToBottom();
-      }
-
+			setTimeout(() => {
+				const aiResponse = generateAIResponse(currentInput);
+				const aiTimestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+				chatLog = [...chatLog, {sender: "ai", text: aiResponse, timestamp: aiTimestamp}];
+				isLoading = false;
+				scrollToBottom();
+			}, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
 		}
 		scrollToBottom();
 	}
 	
-	function clearChatHandler(){
-		const result = clearChat();
-    chatLog = result.chatLog;
-    showChat = result.showChat;
+	function generateAIResponse(input) {
+		// Simple response generation based on uploaded files
+		const responses = [
+			`Based on your uploaded textbooks, I can help you with "${input}". Let me analyze the relevant sections...`,
+			`I found relevant information in your textbooks about "${input}". Here's what I discovered...`,
+			`Great question about "${input}"! According to the materials you've uploaded...`,
+			`Let me reference your textbooks to answer "${input}". From what I can see...`
+		];
+		
+		if (uploadedFiles.length === 0) {
+			return "I'd be happy to help you with that! Please upload some textbooks first so I can provide more accurate, context-specific answers.";
+		}
+		
+		return responses[Math.floor(Math.random() * responses.length)];
 	}
 	
-	function clearFilesHandler(){
-		const result = clearFiles(fileInput); // call helper
-
-    uploadedFiles = result.uploadedFiles;
-    chatLog = [...chatLog, result.systemMessage];
-    showChat = result.showChat;
-
-    scrollToBottom();
+	function clearChat(){
+		chatLog = [];
+		showChat = false;
+	}
+	
+	function clearFiles(){
+		uploadedFiles = [];
+		if (fileInput) {
+			fileInput.value = '';
+		}
+		const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+		chatLog = [...chatLog, {
+			sender: "system", 
+			text: "🗑️ All uploaded files have been cleared.", 
+			timestamp: timestamp
+		}];
+		showChat = true;
+		scrollToBottom();
 	}
 	
 	function scrollToBottom() {
@@ -122,6 +118,9 @@
 		e.target.style.height = 'auto';
 		e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
 	}
+  onDestroy(() => {
+    if (fileURL) URL.revokeObjectURL(fileURL);
+  });
 </script>
 
 <style>
@@ -148,48 +147,75 @@
   }
   
   nav {
-    background-color: var(--bg-color);
+    background: rgba(212, 191, 174, 0.95);
+    backdrop-filter: blur(20px);
     padding: 1.5rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
-    z-index: 10;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
   }
-  
+
+  .logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .logo:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
+
   .nav-links {
     display: flex;
     gap: 2rem;
     align-items: center;
   }
-  
+
   .nav-links a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.2s;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
+    position: relative;
+    border-bottom: none;
   }
-  
+
   .nav-links a:hover {
     color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    background-color: var(--hover-color);
+    transform: translateY(-2px);
   }
 
   .nav-links a.active {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(45, 39, 33, 0.3);
   }
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1e1e1e;
-    text-decoration: none;
+  .page-wrapper {
+    padding: 2.5rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
   }
-  
+
+  .container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
   .chat-btn, .send-btn, .clear-btn {
     padding: 0.75rem 1.5rem;
     background-color: #2d2721;
@@ -233,13 +259,26 @@
     gap: 1.5rem;
     overflow-y: auto;
   }
-  
+
+  .sidebar.collapsed {
+    width: 50px;
+    overflow: hidden;
+  }
+
   .sidebar h1 {
     font-size: 1.2rem;
     font-weight: bold;
     color: #2d2721;
     text-align: center;
     margin: 0;
+  }
+
+  .sidebar h2 {
+    margin: 0 0 1rem;
+  }
+
+  .sidebar button {
+    margin-bottom: 1rem;
   }
   
   .file-list {
@@ -255,6 +294,7 @@
     font-size: 0.85rem;
     word-break: break-word;
     color: #2d2721;
+    cursor:pointer;
   }
   
   .chat-section {
@@ -264,7 +304,12 @@
     padding: 2rem;
     overflow: hidden;
   }
-  
+  .chat-full {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
   .chat-header {
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border-color);
@@ -342,23 +387,21 @@
     border-radius: 15px 15px 15px 0;
   }
   
-.chat-bubble.system {
-  align-self: center;
-  /* background-color: #fdecea; soft red */
-  color: #611a15; /* deep red text */
-  /* border: 1px solid #f5c6cb; */
-  border-radius: 8px;
-  padding: 12px 20px;
-  margin: 12px 0;
-  font-style: normal;
-  font-weight: 500;
-  text-align: center;
-  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); */
-  max-width: 90%;
-}
+  .chat-bubble.system {
+    align-self: center;
+    /* background-color: #fdecea; soft red */
+    color: #611a15; /* deep red text */
+    /* border: 1px solid #f5c6cb; */
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin: 12px 0;
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); */
+    max-width: 90%;
+  }
 
-
-  
   .chat-timestamp {
     font-size: 0.75rem;
     color: #aaa;
@@ -441,6 +484,34 @@
       gap: 1rem;
     }
   }
+
+  .chat-log .system {
+    color: #555;
+    font-style: italic;
+  }
+
+  .chat-log .user {
+    font-weight: bold;
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 0.5rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .chat-input input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .chat-input button {
+    margin-left: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+  
 </style>
 
 <nav>
@@ -454,13 +525,14 @@
 
 <div class="layout">
   <aside class="sidebar">
+    {#if !selectedFile}
     <h1>Upload Textbooks</h1>
-    <div class="button-group">
-      <button class="chat-btn" on:click={fileUpload}>📚 Upload</button>
-      {#if uploadedFiles.length > 0}
-        <button class="clear-btn" on:click={clearFilesHandler}>🗑️ Clear Files</button>
-      {/if}
-    </div>
+     <div class="button-group">
+       <button class="chat-btn" on:click={fileUpload}>📚 Upload</button>
+       {#if uploadedFiles.length > 0}
+         <button class="clear-btn" on:click={clearFiles}>🗑️ Clear Files</button>
+       {/if}
+     </div>
     
     <input
       bind:this={fileInput}
@@ -470,16 +542,45 @@
       style="display: none;"
       on:change={handleFileChange}
     />
-    
-    {#if uploadedFiles.length > 0}
+        {#if uploadedFiles.length > 0}
       <div class="file-list">
         <h3 style="color: #2d2721; font-size: 1rem;">Uploaded Files ({uploadedFiles.length}):</h3>
         {#each uploadedFiles as file}
-          <div class="file-item">{file.name}</div>
+          <div class="file-item" on:click={() => openViewer(file)}>{file.name}</div>
         {/each}
       </div>
     {/if}
+
+  {:else}
+    
+    <button 
+      class="send-btn" 
+      on:click={closeViewer} 
+      style="margin: 1rem auto; display: block;"
+    >
+      ← Close Viewer
+    </button>
+	    {#if uploadedFiles.length > 0}
+      <div class="file-list">
+        <h3 style="color: #2d2721; font-size: 1rem;">Uploaded Files ({uploadedFiles.length}):</h3>
+        {#each uploadedFiles as file}
+          <div class="file-item" on:click={() => openViewer(file)}>{file.name}</div>
+        {/each}
+      </div>
+    {/if}
+  {/if}
   </aside>
+  {#if selectedFile}
+  <div 
+    class="file-viewer" 
+    style="flex:1; display:flex; flex-direction:column;"
+  >
+    <iframe
+      src={fileURL}
+      style="flex:1; width:100%; border:none;"
+    ></iframe>
+  </div>
+{/if}
 
   <main class="chat-section">
     <header class="chat-header">
@@ -525,7 +626,7 @@
         >
           {isLoading ? "..." : "Send"}
         </button>
-        <button class="clear-btn" on:click={clearChatHandler}>Clear Chat</button>
+        <button class="clear-btn" on:click={clearChat}>Clear Chat</button>
       </div>
     </section>
   </main>
