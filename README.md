@@ -2,6 +2,10 @@
 
 ARKIVE is a digital backpack for students, offering centralized access to digital textbooks, planners, notes, and productivity tools.
 
+![Example Image](ARKIVE.png)
+
+
+
 ## 🚀 Features
 
 - 📚 Digital textbook viewer  
